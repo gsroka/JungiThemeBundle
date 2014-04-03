@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>JungiThemeBundle by piku235</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>JungiThemeBundle</h1>
+        <h2>The powerful themes engine designed for the Symfony2</h2>
+        <a href="https://github.com/piku235/JungiThemeBundle" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="jungithemebundle" class="anchor" href="#jungithemebundle"><span class="octicon octicon-link"></span></a>JungiThemeBundle</h1>
+
+<p>The JungiThemeBundle is a powerful theme engine designed for the Symfony2. It provides flexible and smart themes
+which have so-called tags. Simply these tags allows you for eg. select an appropriate theme (mobile or desktop version)
+for a current request (I will cover about it later). You can do with tags whatever you want, there is no limit. Of course
+the abilities of this bundle not end here. Read the docs if you want to know more.</p>
+
+<p><a href="https://travis-ci.org/piku235/JungiThemeBundle"><img src="https://travis-ci.org/piku235/JungiThemeBundle.svg?branch=master" alt="Build Status"></a></p>
+
+<h2>
+<a name="documentation" class="anchor" href="#documentation"><span class="octicon octicon-link"></span></a>Documentation</h2>
+
+<p>All documentations will be listed in the <code>Resources/doc</code> directory</p>
+
+<h2>
+<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h2>
+
+<p>JungiSimpleEnvironmentBundle</p>
+
+<p>JungiSimpleThemeBundle</p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<h3>
+<a name="step-1-install-jungithemebundle-using-composer" class="anchor" href="#step-1-install-jungithemebundle-using-composer"><span class="octicon octicon-link"></span></a>Step 1: Install JungiThemeBundle using composer</h3>
+
+<p>Add JungiThemeBundle in your composer.json:</p>
+
+<div class="highlight highlight-js"><pre><span class="p">{</span>
+    <span class="s2">"require"</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">"jungi/theme-bundle"</span><span class="o">:</span> <span class="s2">"~1.0"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Or run the following command in your project:</p>
+
+<div class="highlight highlight-bash"><pre><span class="nv">$ </span>php composer.phar require jungi/theme-bundle <span class="s2">"~1.0"</span>
+</pre></div>
+
+<h3>
+<a name="step-2-enable-the-bundle" class="anchor" href="#step-2-enable-the-bundle"><span class="octicon octicon-link"></span></a>Step 2: Enable the bundle</h3>
+
+<p>Enable the bundle in the kernel:</p>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+<span class="c1">// app/AppKernel.php</span>
+
+<span class="k">public</span> <span class="k">function</span> <span class="nf">registerBundles</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$bundles</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="c1">// ...</span>
+        <span class="k">new</span> <span class="nx">Jungi\ThemeBundle\JungiThemeBundle</span><span class="p">(),</span>
+    <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2>
+<a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h2>
+
+<p>The bundle comes with a default set of configuration which is listed bellow:</p>
+
+<div class="highlight highlight-yaml"><pre><span class="c1"># app/config/config.yml</span>
+<span class="l-Scalar-Plain">jungi_theme</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">sandbox_mode</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
+</pre></div>
+
+<p>This step is optional, but I guess you'll be not using the <strong>sandbox_mode</strong> so set the <strong>sandbox_mode</strong> to false:</p>
+
+<div class="highlight highlight-yaml"><pre><span class="c1"># app/config/config.yml</span>
+<span class="l-Scalar-Plain">jungi_theme</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">sandbox_mode</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
+</pre></div>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>This bundle is under the <a href="https://github.com/piku235/JungiThemeBundle/blob/master/Resources/meta/LICENSE">MIT license</a></p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/piku235/JungiThemeBundle/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/piku235/JungiThemeBundle/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/piku235/JungiThemeBundle"></a> is maintained by <a href="https://github.com/piku235">piku235</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
