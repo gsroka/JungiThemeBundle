@@ -11,8 +11,8 @@
 
 namespace Jungi\ThemeBundle\Tests\Selector;
 
+use Jungi\ThemeBundle\Exception\NullThemeException;
 use Jungi\ThemeBundle\Exception\ThemeNotFoundException;
-use Jungi\ThemeBundle\Exception\ThemeSelectorException;
 use Jungi\ThemeBundle\Selector\StandardThemeSelector;
 use Jungi\ThemeBundle\Tests\TestCase;
 use Jungi\ThemeBundle\Core\SimpleThemeHolder;
@@ -132,7 +132,7 @@ class StandardThemeSelectorTest extends TestCase
 	/**
 	 * Tests the validation
 	 *
-	 * @expectedException Jungi\ThemeBundle\Exception\ThemeValidationException
+	 * @expectedException \Jungi\ThemeBundle\Exception\ThemeValidationException
 	 */
 	public function testFailedValidation()
 	{
@@ -143,7 +143,7 @@ class StandardThemeSelectorTest extends TestCase
 	}
 
 	/**
-	 * Tests fallback functionality when the validation has failed
+	 * Tests the fallback functionality when the validation has failed
 	 */
 	public function testFallbackOnFailedValidation()
 	{
@@ -166,7 +166,7 @@ class StandardThemeSelectorTest extends TestCase
 	}
 
 	/**
-	 * Tests fallback functionality when a real theme is not exist
+	 * Tests the fallback functionality when a real theme is not exist
 	 */
 	public function testFallbackOnEmptyTheme()
 	{
@@ -186,7 +186,7 @@ class StandardThemeSelectorTest extends TestCase
 	}
 
 	/**
-	 * Tests fallback functionality when a real theme is not exist
+	 * Tests the fallback functionality when a real theme is not exist
 	 */
 	public function testFallbackOnNonExistingTheme()
 	{
@@ -206,7 +206,7 @@ class StandardThemeSelectorTest extends TestCase
 	}
 
 	/**
-	 * Tests fallback functionality when a real theme is exist
+	 * Tests the fallback functionality when a real theme is exist
 	 */
 	public function testFallbackOnExistingTheme()
 	{
@@ -225,7 +225,7 @@ class StandardThemeSelectorTest extends TestCase
 	}
 
 	/**
-	 * Tests on existing theme
+	 * Tests on an existing theme
 	 */
 	public function testOnExistingTheme()
 	{
@@ -235,8 +235,70 @@ class StandardThemeSelectorTest extends TestCase
 	    $this->assertEquals('footheme', $this->holder->getTheme()->getName());
 	}
 
+    /**
+     * Tests on an empty theme name
+     *
+     * @expectedException \Jungi\ThemeBundle\Exception\NullThemeException
+     */
+    public function testOnNullTheme()
+    {
+        $request = $this->createDesktopRequest();
+
+        $this->resolver->setThemeName(null, $request);
+        $this->selector->select($request);
+    }
+
+    /**
+     * Tests on an empty theme name with enabled "ignore null themes"
+     */
+    public function testOnNullThemeWithNullThemesIgnore()
+    {
+        $request = $this->createDesktopRequest();
+
+        $this->resolver->setThemeName(null, $request);
+        $this->selector->setIgnoreNullThemes(true);
+
+        try {
+            $this->selector->select($request);
+        } catch (NullThemeException $e) {
+            $this->fail('When the option "ignore null themes" is enabled the NullThemeException should not be thrown.');
+        }
+    }
+
+    /**
+     * Tests on an empty theme name
+     *
+     * @expectedException \Jungi\ThemeBundle\Exception\NullThemeException
+     */
+    public function testFallbackOnNullTheme()
+    {
+        $request = $this->createDesktopRequest();
+
+        $this->resolver->setThemeName('missing_theme', $request);
+        $this->selector->setFallback(new InMemoryThemeResolver(null));
+        $this->selector->select($request);
+    }
+
+    /**
+     * Tests on an empty fallback theme name with enabled "ignore null themes"
+     */
+    public function testFallbackOnNullThemeWithNullThemesIgnore()
+    {
+        $request = $this->createDesktopRequest();
+
+        $this->resolver->setThemeName('missing_theme', $request);
+        $this->selector->setFallback(new InMemoryThemeResolver(null));
+        $this->selector->setIgnoreNullThemes(true);
+
+        try {
+            $this->selector->select($request);
+        } catch (NullThemeException $e) {
+            $this->fail('When the option "ignore null themes" is enabled the NullThemeException should not be thrown.');
+        }
+    }
+
 	/**
-	 * Tests on bad request
+	 * Tests on a bad request
 	 */
 	public function testOnNonExistingTheme()
 	{
@@ -245,12 +307,12 @@ class StandardThemeSelectorTest extends TestCase
 
         try {
 	        $this->selector->select($request);
-        } catch (ThemeSelectorException $e) {
+        } catch (\RuntimeException $e) {
             if ($e->getPrevious() instanceof ThemeNotFoundException) {
                 return;
             }
 
-            $this->fail('An exception "ThemeSelectorException" with a previous "ThemeNotFoundException" exception should be raised.');
+            $this->fail('An exception with a previous exception "ThemeNotFoundException" should be raised.');
         }
 	}
 

@@ -12,11 +12,11 @@
 namespace Jungi\ThemeBundle\Exception;
 
 /**
- * ThemeSelectorException
- * 
+ * NullThemeException
+ *
  * @author Piotr Kugla <piku235@gmail.com>
  */
-class ThemeSelectorException extends \RuntimeException
+class NullThemeException extends \LogicException
 {
-	
-}
+
+} 

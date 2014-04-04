@@ -77,19 +77,21 @@ The bundle comes with a default set of configuration which is listed bellow:
 ```yaml
 # app/config/config.yml
 jungi_theme:
-    empty_theme: true
+    ignore_null_themes: false
 ```
 
-This step is optional, but I guess you'll be not using the **empty_theme** so set the **empty_theme** to false.
+_This step is optional_
+
+You should switch the option **ignore_null_themes** to true.
 
 ```yaml
 # app/config/config.yml
 jungi_theme:
-    empty_theme: false
+    ignore_null_themes: true
 ```
 
-The purpose of the empty theme is only to ensure that project will not blow up (:, but seriously to not execute an exception
-after the installation is completed.
+The purpose of the option **ignore_null_themes** is merely to ensure that project will not blow up (:, but seriously to
+not show an exception after the installation of the bundle is complete.
 
 License
 -------

@@ -30,7 +30,10 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('jungi_theme');
         $rootNode
             ->children()
-                ->scalarNode('empty_theme')->defaultTrue()->end()
+                ->scalarNode('ignore_null_themes')
+                    ->defaultFalse()
+                    ->info('Whether to ignore null theme names, when a theme resolver does not returned any theme name. This option is used by the StandardThemeSelector.')
+                ->end()
             ->end()
         ;
 

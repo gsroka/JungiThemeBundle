@@ -26,6 +26,8 @@ interface ThemeSelectorInterface
 	 * @param Request $request A request instance
 	 *
 	 * @return void
+     *
+     * @throws \Exception If something goes wrong
 	 */
 	public function select(Request $request);
 }
