@@ -77,17 +77,17 @@ The bundle comes with a default set of configuration which is listed bellow:
 ```yaml
 # app/config/config.yml
 jungi_theme:
-    ignore_null_themes: false
+    ignore_null_themes: true
 ```
 
 _This step is optional_
 
-You should switch the option **ignore_null_themes** to true.
+You should switch the option **ignore_null_themes** to false.
 
 ```yaml
 # app/config/config.yml
 jungi_theme:
-    ignore_null_themes: true
+    ignore_null_themes: false
 ```
 
 The purpose of the option **ignore_null_themes** is merely to ensure that project will not blow up (:, but seriously to

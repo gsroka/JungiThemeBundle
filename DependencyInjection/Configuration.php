@@ -31,7 +31,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('ignore_null_themes')
-                    ->defaultFalse()
+                    ->defaultTrue()
                     ->info('Whether to ignore null theme names, when a theme resolver does not returned any theme name. This option is used by the StandardThemeSelector.')
                 ->end()
             ->end()
