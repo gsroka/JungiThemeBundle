@@ -11,11 +11,11 @@
 
 namespace Jungi\ThemeBundle\Mapping\Loader;
 
+use Jungi\ThemeBundle\Tag\TagInterface;
 use Symfony\Component\Config\Util\XmlUtils;
 use Jungi\ThemeBundle\Core\StandardTheme;
 use Jungi\ThemeBundle\Tag\Core\TagCollection;
 use Jungi\ThemeBundle\Tag;
-use Symfony\Component\Validator\Constraints\All;
 use Jungi\ThemeBundle\Core\Details;
 
 /**
@@ -118,37 +118,15 @@ class XmlFileLoader extends FileLoader
     protected function parseDetails(\SimpleXMLElement $elm)
     {
         $collection = array();
-        $valid = array(
-            'author.name',
-            'author.www',
-            'author.email',
-            'name',
-            'description',
-            'version',
-            'license'
-        );
         foreach ($elm->xpath('//details[1]/detail') as $detail) {
             if (!isset($detail['name'])) {
                 throw new \InvalidArgumentException('The detail node has not defined attribute "name". Have you forgot about that?');
-            } elseif (!in_array((string) $detail['name'], $valid)) {
-                throw new \InvalidArgumentException(sprintf('The name "%s" of a detail node is invalid.', $detail['name']));
             }
 
             $collection[(string) $detail['name']] = (string) $detail;
         }
-        $property = function ($name) use ($collection) {
-            return isset($collection[$name]) ? $collection[$name] : null;
-        };
 
-        return new Details(
-            $property('name'),
-            $property('version'),
-            $property('description'),
-            $property('license'),
-            $property('author.name'),
-            $property('author.email'),
-            $property('author.www')
-        );
+        return LoaderUtils::createDetails($collection);
     }
 
     /**
@@ -165,31 +143,28 @@ class XmlFileLoader extends FileLoader
     {
         $tags = array();
         foreach ($elm->xpath('//tags[1]/tag') as $tag) {
-            if (!isset($tag['class'])) {
-                throw new \InvalidArgumentException('The tag node has not defined attribute "class". Have you forgot about that?');
-            }
-
-            $class = '\\' . ltrim($tag['class'], '\\');
-            if (!class_exists($class)) {
-                $class = '\\Jungi\\ThemeBundle\\Tag\\' . $tag['class'];
-                if (!class_exists($class)) {
-                    throw new \RuntimeException(sprintf('The tag "%s" is not exist.', $tag['class']));
-                }
-            }
-
-            $reflection = new \ReflectionClass($class);
-            if (!$reflection->implementsInterface('Jungi\ThemeBundle\Tag\TagInterface')) {
-                throw new \InvalidArgumentException(sprintf('The tag with class "%s" should implement "Jungi\ThemeBundle\Tag\TagInterface".', $class));
-            }
-            $instance = count($tag->children())
-                        ? $reflection->newInstanceArgs($tag->getArgumentsAsPhp('argument'))
-                        : $reflection->newInstance((string) $tag)
-            ;
-
-            // Add a new tag
-            $tags[] = $instance;
+            $tags[] = $this->parseTag($tag);
         }
 
         return new TagCollection($tags);
+    }
+
+    /**
+     * Parses a theme tags from a given dom element
+     *
+     * @param \SimpleXMLElement $tag A tag element
+     *
+     * @return TagInterface
+     *
+     * @throws \InvalidArgumentException If a tag node has not defined attr "class"
+     * @throws \RuntimeException If a tag is not exist
+     */
+    protected function parseTag(\SimpleXMLElement $tag)
+    {
+        if (!isset($tag['class'])) {
+            throw new \InvalidArgumentException('The tag node has not defined attribute "class". Have you forgot about that?');
+        }
+
+        return LoaderUtils::createTag((string) $tag['class'], count($tag->children()) ? $tag->getArgumentsAsPhp('argument') : (string) $tag);
     }
 }

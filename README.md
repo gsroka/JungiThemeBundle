@@ -13,7 +13,7 @@ the abilities of this bundle not end here. Read the docs if you want to know mor
 * Themes with tags support
 * The possibility of change the current theme
 * Smart theme selecting based on a request
-* Flexible managing themes
+* Flexible themes manage
 * Theme mappings (xml, php, yaml)
 * Themes validation
 
@@ -21,6 +21,8 @@ Documentation
 -------------
 
 All documentations will be listed in the `Resources/doc` directory
+
+[Read the master documentation](https://github.com/piku235/JungiThemeBundle/tree/master/Resources/doc/index.md)
 
 Examples
 --------

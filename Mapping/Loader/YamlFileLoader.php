@@ -11,15 +11,11 @@
 
 namespace Jungi\ThemeBundle\Mapping\Loader;
 
-use Jungi\ThemeBundle\Mapping\Loader\FileLoader;
 use Symfony\Component\Yaml\Yaml;
-use Symfony\Component\Security\Core\Exception\AccountStatusException;
 use Jungi\ThemeBundle\Core\StandardTheme;
 use Jungi\ThemeBundle\Tag\Core\TagCollection;
 use Jungi\ThemeBundle\Tag;
 use Jungi\ThemeBundle\Core\Details;
-use Symfony\Component\Validator\Constraints\All;
-use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
  * YamlFileLoader
@@ -49,8 +45,8 @@ class YamlFileLoader extends FileLoader
      *
      * @return void
      *
-     * @throws \InvalidArgumentException If a file is not local
-     * @throws \InvalidArgumentException If a file can not be found
+     * @throws \RuntimeException If a file is not local
+     * @throws \RuntimeException If a file can not be found
      * @throws \InvalidArgumentException If a return value from a file is wrong
      */
     public function load($file)
@@ -58,11 +54,11 @@ class YamlFileLoader extends FileLoader
         $path = $this->locator->locate($file);
 
         if (!stream_is_local($path)) {
-            throw new \InvalidArgumentException(sprintf('This is not a local file "%s".', $path));
+            throw new \RuntimeException(sprintf('The "%s" file is not local.', $path));
         }
 
         if (!file_exists($path)) {
-            throw new \InvalidArgumentException(sprintf('File "%s" not found.', $path));
+            throw new \RuntimeException(sprintf('The file "%s" can not be found.', $path));
         }
 
         $content = Yaml::parse($path, true);
@@ -74,35 +70,10 @@ class YamlFileLoader extends FileLoader
         $this->validate($content, $file);
 
         // Parameters
-        $this->parameters = array();
-        if (isset($content['parameters'])) {
-            $this->parameters = $content['parameters'];
-            array_walk_recursive($this->parameters, function(&$item, $key) {
-                // constants
-                if (0 === strpos($item, '@const:')) {
-                    $const = substr($item, 7);
-                    $const = defined($const) ? $const : '\\Jungi\\ThemeBundle\\Tag\\' . $const;
-                    if (!defined($const)) {
-                        throw new \RuntimeException(sprintf('The constant "%s" is not exist.', $const));
-                    }
+        $this->parseParameters($content);
 
-                    $item = constant($const);
-                }
-            });
-        }
-
-        foreach ($content['themes'] as $themeName => $specification) {
-            // Validation
-            $this->validateSpec($specification);
-
-            // Add a new theme to the theme manager
-            $this->themeManager->addTheme(new StandardTheme(
-                $themeName,
-                $this->locator->locate($specification['path']),
-                $this->parseDetails($specification),
-                $this->parseTags($specification)
-            ));
-        }
+        // Themes
+        $this->parseThemes($content);
     }
 
     /**
@@ -115,50 +86,19 @@ class YamlFileLoader extends FileLoader
     protected function parseDetails(array $specification)
     {
         $collection = array();
-        $valid = array(
-            'author',
-            'name',
-            'description',
-            'version',
-            'license'
-        );
         if (isset($specification['details'])) {
             foreach ($specification['details'] as $name => $value) {
-                if (!in_array($name, $valid)) {
-                    throw new \InvalidArgumentException(sprintf('The name "%s" of a detail node is invalid.', $detail['name']));
-                }
-
-                if ($name == 'author') {
-                    if (!is_array($value)) {
-                        throw new \UnexpectedValueException('The value of an author details specification should be an array.');
-                    }
+                if (is_array($value)) {
                     foreach ($value as $childKey => $childValue) {
-                        if (!in_array($childKey, array('name', 'email', 'www'))) {
-                            throw new \InvalidArgumentException(sprintf('The "%s" parameter is invalid for an author details specification.', $childKey));
-                        }
-
-                        $collection['author.' . $childKey] = $childValue;
+                        $collection[$name . '.' . $childKey] = $childValue;
                     }
-
-                    continue;
+                } else {
+                    $collection[$name] = $value;
                 }
-
-                $collection[$name] = $value;
             }
         }
-        $property = function ($name) use ($collection) {
-            return isset($collection[$name]) ? $collection[$name] : null;
-        };
 
-        return new Details(
-            $property('name'),
-            $property('version'),
-            $property('description'),
-            $property('license'),
-            $property('author.name'),
-            $property('author.email'),
-            $property('author.www')
-        );
+        return LoaderUtils::createDetails($collection);
     }
 
     /**
@@ -196,29 +136,74 @@ class YamlFileLoader extends FileLoader
             throw new \InvalidArgumentException('You must define attribute "class" for tags.');
         }
 
-        $class = '\\' . ltrim($tag['class'], '\\');
-        if (!class_exists($class)) {
-            $class = '\\Jungi\\ThemeBundle\\Tag\\' . $tag['class'];
-            if (!class_exists($class)) {
-                throw new \RuntimeException(sprintf('The tag "%s" is not exist.', $tag['class']));
-            }
+        $arguments = isset($tag['arguments']) ? $tag['arguments'] : null;
+        if (is_array($arguments)) {
+            $this->replaceParameters($arguments);
         }
 
-        $reflection = new \ReflectionClass($class);
-        if (!$reflection->implementsInterface('Jungi\ThemeBundle\Tag\TagInterface')) {
-            throw new \InvalidArgumentException(sprintf('The tag with class "%s" should implement "Jungi\ThemeBundle\Tag\TagInterface".', $class));
+        return LoaderUtils::createTag($tag['class'], $arguments);
+    }
+
+    /**
+     * Processes parameters
+     *
+     * @param array $content A file content
+     *
+     * @return void
+     */
+    protected function parseParameters(array $content)
+    {
+        $this->parameters = array();
+        if (isset($content['parameters'])) {
+            $this->parameters = $content['parameters'];
+            array_walk_recursive($this->parameters, function(&$item, $key) {
+                // constants
+                if (0 === strpos($item, '#const:')) {
+                    $const = substr($item, 7);
+                    $const = defined($const) ? $const : '\\Jungi\\ThemeBundle\\Tag\\' . $const;
+                    if (!defined($const)) {
+                        throw new \RuntimeException(sprintf('The constant "%s" is not exist.', $const));
+                    }
+
+                    $item = constant($const);
+                }
+            });
         }
+    }
 
-        if (isset($tag['arguments'])) {
-            if (!is_array($tag['arguments'])) {
-                return $reflection->newInstance($tag['arguments']);
-            }
-
-            $this->replaceParameters($tag['arguments']);
-            return $reflection->newInstanceArgs($tag['arguments']);
+    /**
+     * Parses themes
+     *
+     * @param array $content A configuration file content
+     *
+     * @return void
+     */
+    protected function parseThemes(array $content)
+    {
+        foreach ($content['themes'] as $themeName => $specification) {
+            $this->themeManager->addTheme($this->parseTheme($themeName, $specification));
         }
+    }
 
-        return $reflection->newInstance();
+    /**
+     * Parses a theme
+     *
+     * @param string $themeName     A theme name
+     * @param array  $specification A theme specification
+     *
+     * @return StandardTheme
+     */
+    protected function parseTheme($themeName, array $specification)
+    {
+        // Validation
+        $this->validateSpec($specification);
+
+        return new StandardTheme(
+            $themeName,
+            $this->locator->locate($specification['path']),
+            $this->parseDetails($specification),
+            $this->parseTags($specification)
+        );
     }
 
     /**

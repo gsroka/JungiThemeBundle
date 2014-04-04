@@ -1,0 +1,3 @@
+Docs of the JungiThemeBundle
+============================
+
