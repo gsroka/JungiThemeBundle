@@ -17,9 +17,8 @@ use Symfony\Component\Templating\TemplateReferenceInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\TemplateNameParser;
 
 /**
- * ThemeNameParser converts template names from notation "theme#bundle:section:template.format.engine"
- * to ThemeReference. Also he converts from standard notation "bundle:section:template.format.engine"
- * to TemplateReference
+ * ThemeNameParser wraps a TemplateReferenceInterface instance with the ThemeReference using the current theme.
+ * If the current theme is not set then the parent parse method will be used.
  *
  * @author Piotr Kugla <piku235@gmail.com>
  */
@@ -49,15 +48,14 @@ class ThemeNameParser extends TemplateNameParser
 	 * @param  TemplateReferenceInterface|string $name A template name
 	 *
 	 * @return ThemeReference|TemplateReference
-	 *
-	 * @throws \RuntimeException When ThemeHolderInterface instance will
-	 *                           return null
 	 */
 	public function parse($name)
 	{
 		$theme = $this->holder->getTheme();
+
+        // Use parent method if there is no theme
 		if (null === $theme) {
-		    throw new \RuntimeException('There is no ThemeInterface instance returned by the ThemeHolderInterface instance.');
+            return parent::parse($name);
 		}
 
 		$reference = null;
