@@ -69,7 +69,9 @@ jungi_theme:
     empty_theme: true
 ```
 
-This step is optional, but I guess you'll be not using the __sandbox_mode__ so set the __sandbox_mode__ to false:
+This step is optional, but I guess you'll be not using the **empty_theme** so set the **empty_theme** to false.
+The purpose of the empty theme is only to ensure that project will not blow up (:, but seriously to not execute an exception
+after the installation is completed.
 
 ```yaml
 # app/config/config.yml
