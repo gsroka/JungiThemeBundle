@@ -36,10 +36,9 @@ class JungiThemeExtension extends Extension
 
         // Configuration
         $container->setParameter('jungi.theme.configuration', $config);
-        $container->setParameter('jungi.theme.default_theme', !empty($config['empty_theme']) ? 'empty_theme' : '');
+        $container->setParameter('jungi.theme.default_theme', !empty($config['empty_theme']) ? 'empty_theme' : 'no_set');
 
         // Class cache
-        /*
         $this->addClassesToCompile(array(
         	'Jungi\ThemeBundle\CacheWarmer\TemplateFinderChain',
             'Jungi\ThemeBundle\CacheWarmer\ThemeFinder',
@@ -68,6 +67,6 @@ class JungiThemeExtension extends Extension
             'Jungi\ThemeBundle\Tag\MobileDevices',
             'Jungi\ThemeBundle\Tag\Link',
             'Jungi\ThemeBundle\Tag\Core\TagCollection'
-        ));*/
+        ));
     }
 }
