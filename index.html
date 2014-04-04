@@ -94,15 +94,18 @@ the abilities of this bundle not end here. Read the docs if you want to know mor
 
 <div class="highlight highlight-yaml"><pre><span class="c1"># app/config/config.yml</span>
 <span class="l-Scalar-Plain">jungi_theme</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">sandbox_mode</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
+    <span class="l-Scalar-Plain">empty_theme</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
 </pre></div>
 
-<p>This step is optional, but I guess you'll be not using the <strong>sandbox_mode</strong> so set the <strong>sandbox_mode</strong> to false:</p>
+<p>This step is optional, but I guess you'll be not using the <strong>empty_theme</strong> so set the <strong>empty_theme</strong> to false.</p>
 
 <div class="highlight highlight-yaml"><pre><span class="c1"># app/config/config.yml</span>
 <span class="l-Scalar-Plain">jungi_theme</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">sandbox_mode</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
+    <span class="l-Scalar-Plain">empty_theme</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
 </pre></div>
+
+<p>The purpose of the empty theme is only to ensure that project will not blow up (:, but seriously to not execute an exception
+after the installation is completed.</p>
 
 <h2>
 <a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
