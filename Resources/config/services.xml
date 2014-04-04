@@ -49,11 +49,10 @@
             <argument type="service" id="jungi.theme.holder" />
             <argument type="service" id="event_dispatcher" />
             <argument type="service" id="jungi.theme.resolver" />
+            <argument>%jungi.theme.selector.ignore_null_themes%</argument>
             <argument type="service" id="jungi.theme.validation.validator_helper" />
         </service>
-    	<service id="jungi.theme.resolver.default" class="%jungi.theme.resolver.default.class%">
-    		<argument>%jungi.theme.default_theme%</argument>
-    	</service>
+    	<service id="jungi.theme.resolver.default" class="%jungi.theme.resolver.default.class%" />
         <service id="jungi.theme.mobile_detect" class="%jungi.theme.mobile_detect.class%" scope="request">
             <argument type="service" id="request" />
         </service>

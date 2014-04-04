@@ -36,7 +36,7 @@ class JungiThemeExtension extends Extension
 
         // Configuration
         $container->setParameter('jungi.theme.configuration', $config);
-        $container->setParameter('jungi.theme.default_theme', !empty($config['empty_theme']) ? 'empty_theme' : 'no_set');
+        $container->setParameter('jungi.theme.selector.ignore_null_themes', $config['ignore_null_themes']);
 
         // Class cache
         $this->addClassesToCompile(array(
