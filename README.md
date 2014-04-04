@@ -6,6 +6,15 @@ which have so-called tags. Simply these tags allows you for eg. select an approp
 for a current request (I will cover about it later). You can do with tags whatever you want, there is no limit. Of course
 the abilities of this bundle not end here. Read the docs if you want to know more.
 
+**The most useful features:**
+
+* Themes with tags support
+* The possibility of change the current theme
+* Smart theme selecting based on a request
+* Flexible managing themes
+* Theme mappings (xml, php, yaml)
+* Themes validation
+
 [![Build Status](https://travis-ci.org/piku235/JungiThemeBundle.svg?branch=master)](https://travis-ci.org/piku235/JungiThemeBundle)
 
 Documentation
