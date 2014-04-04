@@ -12,7 +12,6 @@
 namespace Jungi\ThemeBundle\Selector;
 
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Jungi\ThemeBundle\Core\ThemeHolderInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 

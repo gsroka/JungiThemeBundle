@@ -47,10 +47,10 @@ class StandardTheme implements ThemeInterface
      *
      * @param string           $name    A name
      * @param string           $path    A path
-     * @param TagCollection    $tags    A tag collection
      * @param DetailsInterface $details A details
+     * @param TagCollection    $tags    A tag collection (optional)
      */
-    public function __construct($name, $path, TagCollection $tags = null, DetailsInterface $details = null)
+    public function __construct($name, $path, DetailsInterface $details, TagCollection $tags = null)
     {
         $this->name = $name;
         $this->path = $path;

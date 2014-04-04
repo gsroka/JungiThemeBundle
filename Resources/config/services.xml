@@ -20,10 +20,9 @@
     	<parameter key="jungi.theme.selector.listener.class">Jungi\ThemeBundle\Selector\ThemeSelectorListener</parameter>
     	<parameter key="jungi.theme.validation.validator_helper.class">Jungi\ThemeBundle\Validation\ValidatorHelper</parameter>
     	<parameter key="jungi.theme.validation.validation_requirement.class">Jungi\ThemeBundle\Validation\Requirement\ThemeResolver</parameter>
-    	<parameter key="jungi.theme.resolver.class">Jungi\ThemeBundle\Resolver\InMemoryThemeResolver</parameter>
+    	<parameter key="jungi.theme.resolver.default.class">Jungi\ThemeBundle\Resolver\InMemoryThemeResolver</parameter>
     	<parameter key="jungi.theme.changer.class">Jungi\ThemeBundle\Changer\StandardThemeChanger</parameter>
     	<parameter key="jungi.theme.filename_parser.class">Jungi\ThemeBundle\Core\ThemeFilenameParser</parameter>
-    	<parameter key="jungi.theme.default_theme">foo</parameter>
     </parameters>
     
     <services>
@@ -51,12 +50,10 @@
             <argument type="service" id="event_dispatcher" />
             <argument type="service" id="jungi.theme.resolver" />
             <argument type="service" id="jungi.theme.validation.validator_helper" />
-            <argument type="service" id="jungi.theme.fallback_resolver" />
         </service>
-    	<service id="jungi.theme.fallback_resolver" class="%jungi.theme.resolver.class%">
+    	<service id="jungi.theme.resolver.default" class="%jungi.theme.resolver.default.class%">
     		<argument>%jungi.theme.default_theme%</argument>
     	</service>
-    	<service id="jungi.theme.resolver" class="Jungi\ThemeBundle\Resolver\CookieThemeResolver" />
         <service id="jungi.theme.mobile_detect" class="%jungi.theme.mobile_detect.class%" scope="request">
             <argument type="service" id="request" />
         </service>
@@ -94,8 +91,10 @@
         </service>
         <service id="jungi.theme.filename_parser" class="%jungi.theme.filename_parser.class%" />
     	<service id="jungi.theme.manager" class="%jungi.theme.manager.class%" />
-    	
-    	<service id="templating.locator" alias="jungi.theme.locator" />
+
+        <!-- Aliases -->
+        <service id="jungi.theme.resolver" alias="jungi.theme.resolver.default" />
+        <service id="templating.locator" alias="jungi.theme.locator" />
     	<service id="templating.name_parser" alias="jungi.theme.name_parser" />
     </services>
 </container>

@@ -99,8 +99,8 @@ class YamlFileLoader extends FileLoader
             $this->themeManager->addTheme(new StandardTheme(
                 $themeName,
                 $this->locator->locate($specification['path']),
-                $this->parseTags($specification),
-                $this->parseDetails($specification)
+                $this->parseDetails($specification),
+                $this->parseTags($specification)
             ));
         }
     }
@@ -196,7 +196,7 @@ class YamlFileLoader extends FileLoader
             throw new \InvalidArgumentException('You must define attribute "class" for tags.');
         }
 
-        $class = $tag['class'];
+        $class = '\\' . ltrim($tag['class'], '\\');
         if (!class_exists($class)) {
             $class = '\\Jungi\\ThemeBundle\\Tag\\' . $tag['class'];
             if (!class_exists($class)) {
@@ -206,7 +206,7 @@ class YamlFileLoader extends FileLoader
 
         $reflection = new \ReflectionClass($class);
         if (!$reflection->implementsInterface('Jungi\ThemeBundle\Tag\TagInterface')) {
-            throw new \InvalidArgumentException(sprintf('The tag with class "%s" should implement TagInterface.', $class));
+            throw new \InvalidArgumentException(sprintf('The tag with class "%s" should implement "Jungi\ThemeBundle\Tag\TagInterface".', $class));
         }
 
         if (isset($tag['arguments'])) {

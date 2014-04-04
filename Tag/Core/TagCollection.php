@@ -14,8 +14,7 @@ namespace Jungi\ThemeBundle\Tag\Core;
 use Jungi\ThemeBundle\Tag\TagInterface;
 
 /**
- * TagCollection handles tags for quiclky operations
- * and is kind of "Frozen" collection
+ * TagCollection provides extra functions for flexible operations on tags
  *
  * @author Piotr Kugla <piku235@gmail.com>
  */
@@ -83,10 +82,10 @@ class TagCollection implements \IteratorAggregate, \Countable
 	}
 
 	/**
-	 * Checks if a given tag type exists in the collection
+	 * Checks if a given tag type exists
 	 *
 	 * Be careful, because it ONLY looks for a given tag type
-	 * and it does not checking if is EQUAL to a found tag
+	 * and it does not check if it's EQUAL to a found tag
 	 *
 	 * @param string|array $types A type or types
 	 *
@@ -104,8 +103,8 @@ class TagCollection implements \IteratorAggregate, \Countable
 	}
 
 	/**
-	 * Checks if a given tag or collection of tags exists in
-	 * the collection and if they are EQUAL to the found tag
+	 * Checks if a given tag or collection of tags exists
+	 * and if they are EQUAL to the found tag\tags
 	 *
 	 * @param TagInterface|TagInterface[] $tags A one tag or collection of tags
 	 *

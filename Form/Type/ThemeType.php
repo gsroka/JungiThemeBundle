@@ -16,7 +16,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Jungi\ThemeBundle\Core\ThemeManagerInterface;
 use Symfony\Component\Form\Extension\Core\ChoiceList\ObjectChoiceList;
 use Symfony\Component\OptionsResolver\Options;
-use Jungi\ThemeBundle\Core\StandardTheme;
 
 /**
  * A theme type is a kind of select field

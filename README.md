@@ -66,7 +66,7 @@ The bundle comes with a default set of configuration which is listed bellow:
 ```yaml
 # app/config/config.yml
 jungi_theme:
-    sandbox_mode: true
+    empty_theme: true
 ```
 
 This step is optional, but I guess you'll be not using the __sandbox_mode__ so set the __sandbox_mode__ to false:
@@ -74,7 +74,7 @@ This step is optional, but I guess you'll be not using the __sandbox_mode__ so s
 ```yaml
 # app/config/config.yml
 jungi_theme:
-    sandbox_mode: false
+    empty_theme: false
 ```
 
 License

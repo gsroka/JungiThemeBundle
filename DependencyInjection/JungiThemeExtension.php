@@ -34,23 +34,40 @@ class JungiThemeExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
+        // Configuration
+        $container->setParameter('jungi.theme.configuration', $config);
+        $container->setParameter('jungi.theme.default_theme', !empty($config['empty_theme']) ? 'empty_theme' : '');
+
         // Class cache
+        /*
         $this->addClassesToCompile(array(
         	'Jungi\ThemeBundle\CacheWarmer\TemplateFinderChain',
             'Jungi\ThemeBundle\CacheWarmer\ThemeFinder',
             'Jungi\ThemeBundle\Core\MobileDetect',
+            'Jungi\ThemeBundle\Core\Details',
+            'Jungi\ThemeBundle\Core\ThemeFilenameParser',
             'Jungi\ThemeBundle\Core\StandardTheme',
             'Jungi\ThemeBundle\Core\ThemeManager',
             'Jungi\ThemeBundle\Core\ThemeReference',
             'Jungi\ThemeBundle\Core\ThemeNameParser',
+            'Jungi\ThemeBundle\Form\Type\ThemeType',
+            'Jungi\ThemeBundle\Changer\StandardThemeChanger',
+            'Jungi\ThemeBundle\Changer\ThemeChangerEvents',
+            'Jungi\ThemeBundle\Changer\ThemeChangerListener',
             'Jungi\ThemeBundle\Loader\ThemeLocator',
             'Jungi\ThemeBundle\Event\ThemeEvent',
+            'Jungi\ThemeBundle\Mapping\Loader\FileLoader',
+            'Jungi\ThemeBundle\Mapping\Loader\PhpFileLoader',
+            'Jungi\ThemeBundle\Mapping\Loader\XmlFileLoader',
+            'Jungi\ThemeBundle\Mapping\Loader\YamlFileLoader',
+            'Jungi\ThemeBundle\Mapping\SimpleXMLElement',
             'Jungi\ThemeBundle\Selector\StandardThemeSelector',
             'Jungi\ThemeBundle\Selector\DeviceThemeSwitch',
             'Jungi\ThemeBundle\Selector\ThemeSelectorEvents',
             'Jungi\ThemeBundle\Tag\DesktopDevices',
             'Jungi\ThemeBundle\Tag\MobileDevices',
-            'Jungi\ThemeBundle\Tag\Link'
-        ));
+            'Jungi\ThemeBundle\Tag\Link',
+            'Jungi\ThemeBundle\Tag\Core\TagCollection'
+        ));*/
     }
 }

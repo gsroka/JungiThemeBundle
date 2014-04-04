@@ -11,6 +11,8 @@
 
 namespace Jungi\ThemeBundle\Tests\Selector;
 
+use Jungi\ThemeBundle\Exception\ThemeNotFoundException;
+use Jungi\ThemeBundle\Exception\ThemeSelectorException;
 use Jungi\ThemeBundle\Selector\StandardThemeSelector;
 use Jungi\ThemeBundle\Tests\TestCase;
 use Jungi\ThemeBundle\Core\SimpleThemeHolder;
@@ -235,15 +237,21 @@ class StandardThemeSelectorTest extends TestCase
 
 	/**
 	 * Tests on bad request
-	 *
-	 * @expectedException Jungi\ThemeBundle\Exception\ThemeNotFoundException
 	 */
 	public function testOnNonExistingTheme()
 	{
 	    $request = $this->createDesktopRequest();
 	    $this->resolver->setThemeName('footheme_missing', $request);
 
-	    $this->selector->select($request);
+        try {
+	        $this->selector->select($request);
+        } catch (ThemeSelectorException $e) {
+            if ($e->getPrevious() instanceof ThemeNotFoundException) {
+                return;
+            }
+
+            $this->fail('An exception "ThemeSelectorException" with a previous "ThemeNotFoundException" exception should be raised.');
+        }
 	}
 
 	/**

@@ -11,6 +11,7 @@
 
 namespace Jungi\ThemeBundle\Selector;
 
+use Jungi\ThemeBundle\Exception\ThemeNotFoundException;
 use Jungi\ThemeBundle\Exception\ThemeSelectorException;
 use Jungi\ThemeBundle\Core\ThemeManagerInterface;
 use Jungi\ThemeBundle\Resolver\ThemeResolverInterface;
@@ -27,9 +28,9 @@ use Jungi\ThemeBundle\Validation\ValidatorHelper;
 /**
  * StandardThemeSelector generally uses a theme resolver to obtain an appropriate theme for the request
  *
- * But not only theme resolvers decides which theme will be used, the resolved theme can be easly changed
- * in the ResovledThemeEvent. If some theme will not pass the validation process or cause any other problem
- * then a fallback theme resolver will look for a fallback theme
+ * But not only theme resolvers decides which theme will be used, the resolved theme can be easily changed
+ * in the ResolvedThemeEvent. If some theme will not pass the validation process or cause any other problem
+ * then a fallback theme resolver will look for a theme
  *
  * @author Piotr Kugla <piku235@gmail.com>
  */
@@ -147,7 +148,7 @@ class StandardThemeSelector implements ThemeSelectorInterface
      *
      * @param Request $request A request instance
      *
-     * @return Theme
+     * @return ThemeInterface
      *
      * @throws ThemeSelectorException When a theme resolver has not the theme name
      * @throws ThemeValidationException When validation will fail
@@ -176,7 +177,7 @@ class StandardThemeSelector implements ThemeSelectorInterface
      *
      * @param Request $request A request instance
      *
-     * @return Theme
+     * @return ThemeInterface
      *
      * @throws ThemeSelectorException When a theme resolver has not the theme name
      */

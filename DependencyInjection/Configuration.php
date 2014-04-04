@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Jungi\ThemeBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -31,16 +30,7 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('jungi_theme');
         $rootNode
             ->children()
-                ->arrayNode('selector')
-                    ->children()
-                        ->scalarNode('validation')->defaultTrue()->end()
-                    ->end()
-                ->end()
-                ->arrayNode('changer')
-                    ->children()
-                        ->scalarNode('validation')->defaultTrue()->end()
-                    ->end()
-                ->end()
+                ->scalarNode('empty_theme')->defaultTrue()->end()
             ->end()
         ;
 

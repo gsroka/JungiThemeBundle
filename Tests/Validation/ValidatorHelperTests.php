@@ -62,7 +62,7 @@ class ValidatorHelperTest extends TestCase
         $this->metadataFactory = new FakeMetadataFactory();
         $this->request = $this->getMock('Symfony\Component\HttpFoundation\Request');
         $this->theme = new StandardTheme(
-            'footheme', 'path', new TagCollection(), $this->getMock('Jungi\ThemeBundle\Core\DetailsInterface')
+            'footheme', 'path', $this->getMock('Jungi\ThemeBundle\Core\DetailsInterface')
         );
 
         $validator = new Validator($this->metadataFactory, new ConstraintValidatorFactory(), new DefaultTranslator());

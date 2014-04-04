@@ -15,10 +15,11 @@ use Symfony\Component\Config\Util\XmlUtils;
 
 /**
  * SimpleXMLElement class.
- * It's originates from Symfony\Component\DependencyIncjetion\SimpleXMLElement
  *
  * @author Fabien Potencier <fabien@symfony.com>
  * @author Piotr Kugla <piku235@gmail.com>
+ *
+ * @see Symfony\Component\DependencyIncjetion\SimpleXMLElement
  */
 class SimpleXMLElement extends \SimpleXMLElement
 {

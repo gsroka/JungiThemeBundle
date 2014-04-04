@@ -56,7 +56,7 @@ class Details implements DetailsInterface
 	/**
 	 * Constructor
 	 *
-	 * @param stirng $name 		  A name
+	 * @param string $name 		  A name
 	 * @param string $version	  A version
 	 * @param string $description A description
 	 * @param string $license	  A license type

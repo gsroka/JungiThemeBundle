@@ -98,8 +98,8 @@ class XmlFileLoader extends FileLoader
         return new StandardTheme(
             (string) $elm['name'],
             $this->locator->locate((string) $elm['path']),
-            $this->parseTags($elm),
-            $this->parseDetails($elm)
+            $this->parseDetails($elm),
+            $this->parseTags($elm)
         );
     }
 
@@ -169,7 +169,7 @@ class XmlFileLoader extends FileLoader
                 throw new \InvalidArgumentException('The tag node has not defined attribute "class". Have you forgot about that?');
             }
 
-            $class = $tag['class'];
+            $class = '\\' . ltrim($tag['class'], '\\');
             if (!class_exists($class)) {
                 $class = '\\Jungi\\ThemeBundle\\Tag\\' . $tag['class'];
                 if (!class_exists($class)) {
@@ -179,7 +179,7 @@ class XmlFileLoader extends FileLoader
 
             $reflection = new \ReflectionClass($class);
             if (!$reflection->implementsInterface('Jungi\ThemeBundle\Tag\TagInterface')) {
-                throw new \InvalidArgumentException(sprintf('The tag with class "%s" should implement TagInterface.', $class));
+                throw new \InvalidArgumentException(sprintf('The tag with class "%s" should implement "Jungi\ThemeBundle\Tag\TagInterface".', $class));
             }
             $instance = count($tag->children())
                         ? $reflection->newInstanceArgs($tag->getArgumentsAsPhp('argument'))
