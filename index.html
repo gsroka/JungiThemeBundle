@@ -38,10 +38,21 @@ the abilities of this bundle not end here. Read the docs if you want to know mor
 
 <p><a href="https://travis-ci.org/piku235/JungiThemeBundle"><img src="https://travis-ci.org/piku235/JungiThemeBundle.svg?branch=master" alt="Build Status"></a></p>
 
-<h2>
+<p><strong>The most useful features:</strong></p>
+
+<ul>
+<li>Themes with tags support</li>
+<li>The possibility of change the current theme</li>
+<li>Smart theme selecting based on a request</li>
+<li>Flexible themes manage</li>
+<li>Theme mappings (xml, php, yaml)</li>
+<li>Themes validation</li>
+</ul><h2>
 <a name="documentation" class="anchor" href="#documentation"><span class="octicon octicon-link"></span></a>Documentation</h2>
 
 <p>All documentations will be listed in the <code>Resources/doc</code> directory</p>
+
+<p><a href="https://github.com/piku235/JungiThemeBundle/tree/master/Resources/doc/index.md">Read the master documentation</a></p>
 
 <h2>
 <a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h2>
@@ -94,18 +105,20 @@ the abilities of this bundle not end here. Read the docs if you want to know mor
 
 <div class="highlight highlight-yaml"><pre><span class="c1"># app/config/config.yml</span>
 <span class="l-Scalar-Plain">jungi_theme</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">empty_theme</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
+    <span class="l-Scalar-Plain">ignore_null_themes</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
 </pre></div>
 
-<p>This step is optional, but I guess you'll be not using the <strong>empty_theme</strong> so set the <strong>empty_theme</strong> to false.</p>
+<p><em>This step is optional</em></p>
+
+<p>You should switch the option <strong>ignore_null_themes</strong> to false.</p>
 
 <div class="highlight highlight-yaml"><pre><span class="c1"># app/config/config.yml</span>
 <span class="l-Scalar-Plain">jungi_theme</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">empty_theme</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
+    <span class="l-Scalar-Plain">ignore_null_themes</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
 </pre></div>
 
-<p>The purpose of the empty theme is only to ensure that project will not blow up (:, but seriously to not execute an exception
-after the installation is completed.</p>
+<p>The purpose of the option <strong>ignore_null_themes</strong> is merely to ensure that project will not blow up (:, but seriously to
+not show an exception after the installation of the bundle is complete.</p>
 
 <h2>
 <a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
