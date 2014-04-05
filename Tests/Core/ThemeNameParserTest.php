@@ -9,9 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Jungi\ThemeBundle\Tests;
+namespace Jungi\ThemeBundle\Tests\Core;
 
-use Jungi\ThemeBundle\Exception\ThemeNotFoundException;
+use Jungi\ThemeBundle\Tests\Fixtures\Core\FakeThemeHolder;
+use Jungi\ThemeBundle\Tests\TestCase;
 use Symfony\Bundle\FrameworkBundle\Templating\TemplateReference;
 use Jungi\ThemeBundle\Core\ThemeReference;
 use Jungi\ThemeBundle\Core\ThemeNameParser;
@@ -28,7 +29,12 @@ class ThemeNameParserTest extends TestCase
 	 */
 	private $parser;
 
-	/**
+    /**
+     * @var FakeThemeHolder
+     */
+    private $holder;
+
+    /**
 	 * Sets up the environment
 	 *
 	 * @return void
@@ -48,13 +54,9 @@ class ThemeNameParserTest extends TestCase
             }))
         ;
 
-        $holder = $this->getMock('Jungi\ThemeBundle\Core\ThemeHolderInterface');
-        $holder
-        	->expects($this->any())
-        	->method('getTheme')
-        	->will($this->returnValue($this->createThemeMock('Foo')))
-        ;
-		$this->parser = new ThemeNameParser($holder, $kernel);
+        $this->holder = new FakeThemeHolder();
+        $this->holder->setTheme($this->createThemeMock('Foo'));
+		$this->parser = new ThemeNameParser($this->holder, $kernel);
 	}
 
 	/**
@@ -65,6 +67,7 @@ class ThemeNameParserTest extends TestCase
 	protected function tearDown()
 	{
 		$this->parser = null;
+        $this->holder = null;
 	}
 
 	/**
@@ -72,7 +75,7 @@ class ThemeNameParserTest extends TestCase
 	 *
      * @dataProvider getValidLogicalNames
      */
-    public function testParseValidName($name, $ref)
+    public function testOnValidName($name, $ref)
     {
         $template = $this->parser->parse($name);
 
@@ -83,9 +86,20 @@ class ThemeNameParserTest extends TestCase
      * @dataProvider      getInvalidLogicalNames
      * @expectedException \InvalidArgumentException
      */
-    public function testParseInvalidName($name)
+    public function testOnInvalidName($name)
     {
         $this->parser->parse($name);
+    }
+
+    /**
+     * Tests on an empty theme
+     */
+    public function testOnEmptyTheme()
+    {
+        $this->holder->theme = null;
+        $template = $this->parser->parse('FooBundle:Default:index.html.twig');
+
+        $this->assertEquals($template, new TemplateReference('FooBundle', 'Default', 'index', 'html', 'twig'));
     }
 
     /**
