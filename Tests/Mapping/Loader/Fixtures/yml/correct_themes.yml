@@ -1,0 +1,54 @@
+parameters:
+    main_theme.mobile_devices.systems: [ iOS, AndroidOS ]
+    main_theme.mobile_devices.device: "#const:MobileDevices::MOBILE"
+
+themes:
+  foo_1:
+    path: "@JungiFooBundle/Tests/Mapping/Loader/Fixtures/empty"
+    tags:
+        - class: DesktopDevices
+        - class: MobileDevices
+          arguments: [ "%main_theme.mobile_devices.systems%", "%main_theme.mobile_devices.device%" ]
+        - class: Jungi\ThemeBundle\Tests\Fixtures\Tag\Own
+          arguments: test
+    details:
+        name: A fancy theme
+        author:
+            name: piku235
+            email: piku235@gmail.com
+            www: http://test.pl
+        version: 1.0.0
+        license: MIT
+        description: <i>foo desc</i>
+
+  foo_2:
+    path: "@JungiFooBundle/Tests/Mapping/Loader/Fixtures/empty"
+    tags:
+        - class: DesktopDevices
+    details:
+        name: A fancy theme
+        author:
+            name: piku235
+            email: piku235@gmail.com
+            www: http://test.pl
+        version: 1.0.0
+        license: MIT
+        description: <i>foo desc</i>
+
+  foo_3:
+    path: "@JungiFooBundle/Tests/Mapping/Loader/Fixtures/empty"
+    details:
+        name: A fancy theme
+        author:
+            name: piku235
+            email: piku235@gmail.com
+            www: http://test.pl
+        version: 1.0.0
+        license: MIT
+        description: <i>foo desc</i>
+
+  foo_4:
+    path: "@JungiFooBundle/Tests/Mapping/Loader/Fixtures/empty"
+    details:
+        name: A fancy theme
+        version: 1.0.0

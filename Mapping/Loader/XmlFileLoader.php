@@ -86,8 +86,7 @@ class XmlFileLoader extends FileLoader
      *
      * @return StandardTheme
      *
-     * @throws \InvalidArgumentException If a theme node has some missing
-     *         attributes
+     * @throws \InvalidArgumentException If a theme node has some missing attributes
      */
     protected function parseTheme(\SimpleXMLElement $elm)
     {
@@ -110,15 +109,13 @@ class XmlFileLoader extends FileLoader
      *
      * @return Details
      *
-     * @throws \InvalidArgumentException If a detail node has not
-     *                                   defined attr "name"
-     * @throws \InvalidArgumentException If a name of a detail node
-     *                                   is invalid
+     * @throws \InvalidArgumentException If a detail node has not defined attr "name"
+     * @throws \RuntimeException When something goes wrong while parsing details node
      */
     protected function parseDetails(\SimpleXMLElement $elm)
     {
         $collection = array();
-        foreach ($elm->xpath('//details[1]/detail') as $detail) {
+        foreach ($elm->xpath('details[1]/detail') as $detail) {
             if (!isset($detail['name'])) {
                 throw new \InvalidArgumentException('The detail node has not defined attribute "name". Have you forgot about that?');
             }
@@ -126,7 +123,11 @@ class XmlFileLoader extends FileLoader
             $collection[(string) $detail['name']] = (string) $detail;
         }
 
-        return LoaderUtils::createDetails($collection);
+        try {
+            return LoaderUtils::createDetails($collection);
+        } catch (\LogicException $e) {
+            throw new \RuntimeException('An exception has occurred while parsing the details node, see the previous exception', null, $e);
+        }
     }
 
     /**
@@ -142,7 +143,7 @@ class XmlFileLoader extends FileLoader
     protected function parseTags(\SimpleXMLElement $elm)
     {
         $tags = array();
-        foreach ($elm->xpath('//tags[1]/tag') as $tag) {
+        foreach ($elm->xpath('tags[1]/tag') as $tag) {
             $tags[] = $this->parseTag($tag);
         }
 

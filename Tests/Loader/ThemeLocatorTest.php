@@ -167,14 +167,4 @@ class ThemeLocatorTest extends TestCase
         $locator = new ThemeLocator($this->manager, $this->getFileLocator());
         $locator->locate('template');
     }
-
-    protected function getFileLocator()
-    {
-        return $this
-            ->getMockBuilder('Symfony\Component\Config\FileLocator')
-            ->setMethods(array('locate'))
-            ->setConstructorArgs(array('/path/to/fallback'))
-            ->getMock()
-        ;
-    }
 }

@@ -15,7 +15,6 @@ use Jungi\ThemeBundle\Changer\StandardThemeChanger;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Jungi\ThemeBundle\Core\SimpleThemeHolder;
 use Jungi\ThemeBundle\Core\ThemeManager;
-use Jungi\ThemeBundle\Changer\ThemeChangerEvents;
 use Symfony\Component\Validator\Validator;
 use Jungi\ThemeBundle\Tests\Fixtures\Validation\FakeMetadataFactory;
 use Symfony\Component\Validator\ConstraintValidatorFactory;

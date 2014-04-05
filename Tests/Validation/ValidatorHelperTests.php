@@ -18,8 +18,6 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints;
 use Jungi\ThemeBundle\Tests\TestCase;
 use Jungi\ThemeBundle\Core\StandardTheme;
-use Jungi\ThemeBundle\Tag\Core\TagCollection;
-use Jungi\ThemeBundle\Core\Details;
 use Jungi\ThemeBundle\Tests\Fixtures\Validation\FakeMetadataFactory;
 use Jungi\ThemeBundle\Validation\ValidatorHelper;
 use Jungi\ThemeBundle\Tests\Fixtures\Validation\Requirement;

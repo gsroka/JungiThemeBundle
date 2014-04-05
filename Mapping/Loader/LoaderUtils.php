@@ -71,6 +71,7 @@ class LoaderUtils
      * @return Details
      *
      * @throws \InvalidArgumentException If in a given array is placed invalid key
+     * @throws \LogicException If there is missing required argument
      */
     public static function createDetails(array $data)
     {
@@ -88,10 +89,13 @@ class LoaderUtils
                 throw new \InvalidArgumentException(sprintf('The key "%s" for Details instance is invalid.', $key));
             }
         });
-
         $property = function ($name) use ($data) {
             return isset($data[$name]) ? $data[$name] : null;
         };
+
+        if (!$property('name') || !$property('version')) {
+            throw new \LogicException('You must provide "name" and/or "version" argument.');
+        }
 
         return new Details(
             $property('name'),

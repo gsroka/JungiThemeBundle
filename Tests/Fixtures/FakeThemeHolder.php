@@ -1,6 +1,6 @@
 <?php
 
-namespace Jungi\ThemeBundle\Tests\Fixtures\Core;
+namespace Jungi\ThemeBundle\Tests\Fixtures;
 
 use Jungi\ThemeBundle\Core\ThemeHolderInterface;
 use Jungi\ThemeBundle\Core\ThemeInterface;

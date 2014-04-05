@@ -86,4 +86,19 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 
         return $theme;
 	}
+
+    /**
+     * Returns the Mock of Symfony\Component\Config\FileLocator
+     *
+     * @return \Symfony\Component\Config\FileLocator
+     */
+    protected function getFileLocator()
+    {
+        return $this
+            ->getMockBuilder('Symfony\Component\Config\FileLocator')
+            ->setMethods(array('locate'))
+            ->setConstructorArgs(array('/path/to/fallback'))
+            ->getMock()
+        ;
+    }
 }

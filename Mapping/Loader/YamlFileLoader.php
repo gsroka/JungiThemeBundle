@@ -82,6 +82,8 @@ class YamlFileLoader extends FileLoader
      * @param  array $specification A specification
      *
      * @return Details
+     *
+     * @throws \RuntimeException When something goes wrong while parsing details node
      */
     protected function parseDetails(array $specification)
     {
@@ -98,7 +100,11 @@ class YamlFileLoader extends FileLoader
             }
         }
 
-        return LoaderUtils::createDetails($collection);
+        try {
+            return LoaderUtils::createDetails($collection);
+        } catch (\LogicException $e) {
+            throw new \RuntimeException('An exception has occurred while parsing the details node, see the previous exception', null, $e);
+        }
     }
 
     /**

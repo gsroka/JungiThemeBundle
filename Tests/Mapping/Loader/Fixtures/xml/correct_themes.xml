@@ -1,0 +1,61 @@
+<?xml version="1.0" ?>
+
+<theme-mapping>
+    <theme name="foo_1" path="@JungiFooBundle/Tests/Mapping/Loader/Fixtures/empty">
+        <tags>
+            <tag class="MobileDevices">
+            	<argument type="collection">
+            		<argument>iOS</argument>
+            		<argument>AndroidOS</argument>
+            	</argument>
+                <argument type="constant">MobileDevices::MOBILE</argument>
+            </tag>
+            <tag class="Jungi\ThemeBundle\Tests\Fixtures\Tag\Own">test</tag>
+            <tag class="DesktopDevices" />
+        </tags>
+        <details>
+            <detail name="author.name">piku235</detail>
+            <detail name="author.email">piku235@gmail.com</detail>
+            <detail name="author.www">http://test.pl</detail>
+            <detail name="description"><![CDATA[<i>foo desc</i>]]></detail>
+            <detail name="version">1.0.0</detail>
+            <detail name="name">A fancy theme</detail>
+            <detail name="license">MIT</detail>
+        </details>
+    </theme>
+
+    <theme name="foo_2" path="@JungiFooBundle/Tests/Mapping/Loader/Fixtures/empty">
+        <tags>
+            <tag class="DesktopDevices" />
+        </tags>
+        <details>
+            <detail name="author.name">piku235</detail>
+            <detail name="author.email">piku235@gmail.com</detail>
+            <detail name="author.www">http://test.pl</detail>
+            <detail name="description"><![CDATA[<i>foo desc</i>]]></detail>
+            <detail name="version">1.0.0</detail>
+            <detail name="name">A fancy theme</detail>
+            <detail name="license">MIT</detail>
+        </details>
+    </theme>
+
+    <theme name="foo_3" path="@JungiFooBundle/Tests/Mapping/Loader/Fixtures/empty">
+        <details>
+            <detail name="author.name">piku235</detail>
+            <detail name="author.email">piku235@gmail.com</detail>
+            <detail name="author.www">http://test.pl</detail>
+            <detail name="description"><![CDATA[<i>foo desc</i>]]></detail>
+            <detail name="version">1.0.0</detail>
+            <detail name="name">A fancy theme</detail>
+            <detail name="license">MIT</detail>
+        </details>
+    </theme>
+
+    <theme name="foo_4" path="@JungiFooBundle/Tests/Mapping/Loader/Fixtures/empty">
+        <details>
+            <detail name="version">1.0.0</detail>
+            <detail name="name">A fancy theme</detail>
+        </details>
+    </theme>
+
+</theme-mapping>

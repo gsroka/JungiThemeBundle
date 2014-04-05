@@ -11,7 +11,7 @@
 
 namespace Jungi\ThemeBundle\Tests\Core;
 
-use Jungi\ThemeBundle\Tests\Fixtures\Core\FakeThemeHolder;
+use Jungi\ThemeBundle\Tests\Fixtures\FakeThemeHolder;
 use Jungi\ThemeBundle\Tests\TestCase;
 use Symfony\Bundle\FrameworkBundle\Templating\TemplateReference;
 use Jungi\ThemeBundle\Core\ThemeReference;
