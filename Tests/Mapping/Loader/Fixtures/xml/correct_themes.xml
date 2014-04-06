@@ -1,6 +1,9 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 
-<theme-mapping>
+<theme-mapping xmlns="http://github.com/piku235/JungiThemeBundle/blob/master/Mapping/Loader/schema/theme-1.0.xsd"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://github.com/piku235/JungiThemeBundle/blob/master/Mapping/Loader/schema/theme-1.0.xsd">
+
     <theme name="foo_1" path="@JungiFooBundle/Tests/Mapping/Loader/Fixtures/empty">
         <tags>
             <tag class="MobileDevices">

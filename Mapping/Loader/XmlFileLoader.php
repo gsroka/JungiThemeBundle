@@ -71,9 +71,9 @@ class XmlFileLoader extends FileLoader
     protected function loadFile($file)
     {
         try {
-            $doc = XmlUtils::loadFile($file);
+            $doc = XmlUtils::loadFile($file, __DIR__ . '/schema/theme-1.0.xsd');
         } catch (\InvalidArgumentException $e) {
-            throw new \RuntimeException(sprintf('The problem occurred while loading the file "%s", see the previous exception.', $file), null, $e);
+            throw new \RuntimeException(sprintf('The problem has occurred while loading the file "%s", see the previous exception.', $file), null, $e);
         }
 
         return simplexml_import_dom($doc, '\Jungi\ThemeBundle\Mapping\SimpleXMLElement');
@@ -93,6 +93,9 @@ class XmlFileLoader extends FileLoader
         if (! isset($elm['name']) || ! isset($elm['path'])) {
             throw new \InvalidArgumentException('The node theme has some required missing attributes. Have you not forgot to specify attributes "path" and "name" for this node?');
         }
+
+        // Ns
+        $elm->registerXPathNamespace('mapping', 'http://github.com/piku235/JungiThemeBundle/blob/master/Mapping/Loader/schema/theme-1.0.xsd');
 
         return new StandardTheme(
             (string) $elm['name'],
@@ -115,7 +118,7 @@ class XmlFileLoader extends FileLoader
     protected function parseDetails(\SimpleXMLElement $elm)
     {
         $collection = array();
-        foreach ($elm->xpath('details[1]/detail') as $detail) {
+        foreach ($elm->xpath('mapping:details/mapping:detail') as $detail) {
             if (!isset($detail['name'])) {
                 throw new \InvalidArgumentException('The detail node has not defined attribute "name". Have you forgot about that?');
             }
@@ -143,7 +146,7 @@ class XmlFileLoader extends FileLoader
     protected function parseTags(\SimpleXMLElement $elm)
     {
         $tags = array();
-        foreach ($elm->xpath('tags[1]/tag') as $tag) {
+        foreach ($elm->xpath('mapping:tags/mapping:tag') as $tag) {
             $tags[] = $this->parseTag($tag);
         }
 

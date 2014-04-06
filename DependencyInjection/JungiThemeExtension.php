@@ -57,7 +57,6 @@ class JungiThemeExtension extends Extension
             'Jungi\ThemeBundle\Event\ThemeEvent',
             'Jungi\ThemeBundle\Mapping\Loader\FileLoader',
             'Jungi\ThemeBundle\Mapping\Loader\PhpFileLoader',
-            'Jungi\ThemeBundle\Mapping\Loader\XmlFileLoader',
             'Jungi\ThemeBundle\Mapping\Loader\YamlFileLoader',
             'Jungi\ThemeBundle\Mapping\SimpleXMLElement',
             'Jungi\ThemeBundle\Selector\StandardThemeSelector',
