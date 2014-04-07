@@ -67,13 +67,15 @@ class XmlFileLoader extends FileLoader
      * @param string $file A file
      *
      * @return \SimpleXMLElement
+     *
+     * @throws \RuntimeException When the some problem will occur while parsing a mapping file
      */
     protected function loadFile($file)
     {
         try {
             $doc = XmlUtils::loadFile($file, __DIR__ . '/schema/theme-1.0.xsd');
         } catch (\InvalidArgumentException $e) {
-            throw new \RuntimeException(sprintf('The problem has occurred while loading the file "%s", see the previous exception.', $file), null, $e);
+            throw new \RuntimeException(sprintf('The problem has occurred while parsing the file "%s", see the previous exception.', $file), null, $e);
         }
 
         return simplexml_import_dom($doc, '\Jungi\ThemeBundle\Mapping\SimpleXMLElement');

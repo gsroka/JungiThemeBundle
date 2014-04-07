@@ -27,9 +27,9 @@ All documentations will be listed in the `Resources/doc` directory
 Examples
 --------
 
-JungiSimpleEnvironmentBundle
+[JungiSimpleEnvironmentBundle](https://github.com/piku235/JungiSimpleEnvironmentBundle)
 
-JungiSimpleThemeBundle
+[JungiSimpleThemeBundle](https://github.com/piku235/JungiSimpleThemeBundle)
 
 Installation
 ------------
@@ -90,8 +90,9 @@ jungi_theme:
     ignore_null_themes: false
 ```
 
-The purpose of the option **ignore_null_themes** is merely to ensure that project will not blow up (:, but seriously to
-not show an exception after the installation of the bundle is complete.
+The purpose of the option **ignore_null_themes** is merely to ensure that a project will not blow up (:, but seriously it
+intends to not show an exception if a ThemeResolverInterface instance will return null which means that it can not match
+any theme for the current request.
 
 License
 -------

@@ -262,10 +262,10 @@ class YamlFileLoader extends FileLoader
      */
     protected function validateSpec(array $specification)
     {
-        if (!isset($specification['path'])) {
-            throw new \InvalidArgumentException('There is missing "path" parameter in a theme specification.');
+        if (!isset($specification['path']) || !isset($specification['details'])) {
+            throw new \InvalidArgumentException('The one or all of required parameters "path, details" are missing in the theme specification.');
         }
-        if (true == $keys = array_diff(array_keys($specification), array('tags', 'path', 'details'))) {
+        if ($keys = array_diff(array_keys($specification), array('tags', 'path', 'details'))) {
             throw new \InvalidArgumentException(sprintf('The parameters "%s" are illegal in the theme specification.', implode(', ', $keys)));
         }
     }
