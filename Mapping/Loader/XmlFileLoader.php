@@ -97,7 +97,7 @@ class XmlFileLoader extends FileLoader
         }
 
         // Ns
-        $elm->registerXPathNamespace('mapping', 'http://github.com/piku235/JungiThemeBundle/blob/master/Mapping/Loader/schema/theme-1.0.xsd');
+        $elm->registerXPathNamespace('mapping', 'http://piku235.github.io/JungiThemeBundle/schema/theme-mapping');
 
         return new StandardTheme(
             (string) $elm['name'],
