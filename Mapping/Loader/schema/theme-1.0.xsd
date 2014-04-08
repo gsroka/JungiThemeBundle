@@ -1,17 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<xs:schema xmlns="http://github.com/piku235/JungiThemeBundle/blob/master/Mapping/Loader/schema/theme-1.0.xsd"
+<xs:schema xmlns="http://piku235.github.io/JungiThemeBundle/schema/theme-mapping"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    targetNamespace="http://github.com/piku235/JungiThemeBundle/blob/master/Mapping/Loader/schema/theme-1.0.xsd"
+    targetNamespace="http://piku235.github.io/JungiThemeBundle/schema/theme-mapping"
     elementFormDefault="qualified">
 
-    <xs:element name="theme-mapping" type="ThemeMapping" />
+    <xs:annotation>
+        <xs:documentation><![CDATA[
+      JungiThemeBundle XML Theme Mapping Schema, version 1.0
+      Author: Piotr Kugla
 
-    <xs:complexType name="ThemeMapping">
-        <xs:sequence>
-            <xs:element name="theme" type="Theme" minOccurs="1" maxOccurs="unbounded" />
-        </xs:sequence>
-    </xs:complexType>
+      This is the scheme for creating themes in the JungiThemeBundle
+    ]]></xs:documentation>
+    </xs:annotation>
+
+    <xs:element name="theme-mapping">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="theme" type="Theme" minOccurs="1" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
     <xs:complexType name="Theme">
         <xs:sequence>

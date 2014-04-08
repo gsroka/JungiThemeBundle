@@ -20,7 +20,7 @@ use Jungi\ThemeBundle\Tests\TestCase;
 use Jungi\ThemeBundle\Tag;
 
 /**
- * AbstractFileLoaderTest
+ * AbstractFileLoader Test Case
  *
  * @author Piotr Kugla <piku235@gmail.com>
  */

@@ -41,7 +41,7 @@ Add JungiThemeBundle in your composer.json:
 ```js
 {
     "require": {
-        "jungi/theme-bundle": "~1.0.0"
+        "jungi/theme-bundle": "~1.0"
     }
 }
 ```
@@ -49,7 +49,7 @@ Add JungiThemeBundle in your composer.json:
 Or run the following command in your project:
 
 ```bash
-$ php composer.phar require jungi/theme-bundle "~1.0.0"
+$ php composer.phar require jungi/theme-bundle "~1.0"
 ```
 
 ### Step 2: Enable the bundle
