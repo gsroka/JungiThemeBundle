@@ -13,6 +13,8 @@ namespace Jungi\ThemeBundle\Tests\Resolver;
 
 use Jungi\ThemeBundle\Tests\TestCase;
 use Jungi\ThemeBundle\Resolver\CookieThemeResolver;
+use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * CookieThemeResolver Test Case
@@ -26,13 +28,25 @@ class CookieThemeResolverTest extends TestCase
      */
     private $resolver;
 
-	/**
+    /**
+     * @var array
+     */
+    private $options;
+
+    /**
 	 * (non-PHPdoc)
 	 * @see PHPUnit_Framework_TestCase::setUp()
 	 */
 	protected function setUp()
 	{
-		$this->resolver = new CookieThemeResolver();
+        $this->options = array(
+            'lifetime' => 86400, // +24h
+            'path' => '/foo',
+            'domain' => 'fooweb.com',
+            'secure' => true,
+            'httpOnly' => false
+        );
+		$this->resolver = new CookieThemeResolver($this->options);
 	}
 
 	/**
@@ -56,4 +70,24 @@ class CookieThemeResolverTest extends TestCase
 	    $this->assertEquals('footheme', $this->resolver->resolveThemeName($desktopReq));
 	    $this->assertNull($this->resolver->resolveThemeName($helpReq));
 	}
+
+    /**
+     * Tests writes to a response
+     */
+    public function testWriteResponse()
+    {
+        $response = new Response();
+        $this->resolver->writeResponse('footheme', $response);
+
+        $cookies = $response->headers->getCookies();
+        $this->assertContains(new Cookie(
+            CookieThemeResolver::COOKIE_NAME,
+            'footheme',
+            time() + $this->options['lifetime'],
+            $this->options['path'],
+            $this->options['domain'],
+            $this->options['secure'],
+            $this->options['httpOnly']
+        ), $cookies, '', false, false);
+    }
 }

@@ -46,6 +46,10 @@ class CookieThemeResolver implements ThemeResolverInterface, ResponseWriterInter
 	        'secure' => false,
 	        'httpOnly' => true
 	    );
+
+        if (isset($this->options['lifetime'])) {
+            $this->options['expire'] = time() + $this->options['lifetime'];
+        }
 	}
 
 	/**
