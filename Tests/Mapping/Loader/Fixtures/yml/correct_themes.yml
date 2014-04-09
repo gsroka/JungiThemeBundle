@@ -4,7 +4,7 @@ parameters:
 
 themes:
     foo_1:
-        path: "@JungiFooBundle/Tests/Mapping/Loader/Fixtures/empty"
+        path: "@JungiFooBundle/Resources/theme"
         tags:
             - class: DesktopDevices
             - class: MobileDevices
@@ -22,7 +22,7 @@ themes:
             description: <i>foo desc</i>
 
     foo_2:
-        path: "@JungiFooBundle/Tests/Mapping/Loader/Fixtures/empty"
+        path: "@JungiFooBundle/Resources/theme"
         tags:
             - class: DesktopDevices
         details:
@@ -36,7 +36,7 @@ themes:
             description: <i>foo desc</i>
 
     foo_3:
-        path: "@JungiFooBundle/Tests/Mapping/Loader/Fixtures/empty"
+        path: "@JungiFooBundle/Resources/theme"
         details:
             name: A fancy theme
             author:
@@ -48,7 +48,7 @@ themes:
             description: <i>foo desc</i>
 
     foo_4:
-        path: "@JungiFooBundle/Tests/Mapping/Loader/Fixtures/empty"
+        path: "@JungiFooBundle/Resources/theme"
         details:
             name: A fancy theme
             version: 1.0.0

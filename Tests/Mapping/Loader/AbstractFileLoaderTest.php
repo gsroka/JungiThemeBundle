@@ -46,7 +46,7 @@ abstract class AbstractFileLoaderTest extends TestCase
         $this->kernel
             ->expects($this->any())
             ->method('locateResource')
-            ->will($this->returnValue(__DIR__ . '/Fixtures/empty'))
+            ->will($this->returnValue(__DIR__ . '/Fixtures/fake_bundle'))
         ;
     }
 
@@ -68,16 +68,16 @@ abstract class AbstractFileLoaderTest extends TestCase
 
         $details = new Details('A fancy theme', '1.0.0', '<i>foo desc</i>', 'MIT', 'piku235', 'piku235@gmail.com', 'http://test.pl');
         $themes = array(
-            new StandardTheme('foo_1', __DIR__ . '/Fixtures/empty', $details, new TagCollection(array(
+            new StandardTheme('foo_1', __DIR__ . '/Fixtures/fake_bundle', $details, new TagCollection(array(
                 new Tag\DesktopDevices(),
                 new Tag\MobileDevices(array('iOS', 'AndroidOS'), Tag\MobileDevices::MOBILE),
                 new Own('test')
             ))),
-            new StandardTheme('foo_2', __DIR__ . '/Fixtures/empty', $details, new TagCollection(array(
+            new StandardTheme('foo_2', __DIR__ . '/Fixtures/fake_bundle', $details, new TagCollection(array(
                 new Tag\DesktopDevices()
             ))),
-            new StandardTheme('foo_3', __DIR__ . '/Fixtures/empty', $details),
-            new StandardTheme('foo_4', __DIR__ . '/Fixtures/empty', new Details('A fancy theme', '1.0.0'))
+            new StandardTheme('foo_3', __DIR__ . '/Fixtures/fake_bundle', $details),
+            new StandardTheme('foo_4', __DIR__ . '/Fixtures/fake_bundle', new Details('A fancy theme', '1.0.0'))
         );
 
         foreach ($themes as $theme) {

@@ -57,25 +57,30 @@ class SessionThemeResolverTest extends TestCase
 	}
 
 	/**
-	 * Tests the work of theme resolver when
-	 * the request has set theme in session
+	 * Tests when the request has set theme in the session
 	 */
 	public function testOnStandardRequest()
 	{
-	    // Without session
-	    $helpReq = $this->createDesktopRequest();
-
 	    // Sets a theme name
 		$this->resolver->setThemeName('test', $this->request);
 
 		// Assert on standard request
 		$this->assertEquals('test', $this->resolver->resolveThemeName($this->request));
-
-		// Assert when the request has not any sessions
-		$this->assertNull($this->resolver->resolveThemeName($helpReq));
 	}
 
-	/**
+    /**
+     * Tests when a request does not have a session
+     */
+    public function testWhenThereIsNoSession()
+    {
+        // Without session
+        $req = $this->createDesktopRequest();
+
+        // Asserts
+        $this->assertNull($this->resolver->resolveThemeName($req));
+    }
+
+    /**
 	 * Tests in the opposite from testOnRequestWithTheme
 	 */
 	public function testOnMessyRequest()
