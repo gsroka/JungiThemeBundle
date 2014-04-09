@@ -1,3 +1,1 @@
-Docs of the JungiThemeBundle
-============================
-
+Docs of the JungiThemeBundle============================

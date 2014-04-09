@@ -1,99 +1,1 @@
-<?xml version="1.0" ?>
-
-<container xmlns="http://symfony.com/schema/dic/services"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-    <parameters>
-    	<parameter key="jungi.theme.manager.class">Jungi\ThemeBundle\Core\ThemeManager</parameter>
-    	<parameter key="jungi.theme.mapping.loader.xml.class">Jungi\ThemeBundle\Mapping\Loader\XmlFileLoader</parameter>
-    	<parameter key="jungi.theme.mapping.loader.yml.class">Jungi\ThemeBundle\Mapping\Loader\YamlFileLoader</parameter>
-    	<parameter key="jungi.theme.mapping.loader.php.class">Jungi\ThemeBundle\Mapping\Loader\PhpFileLoader</parameter>
-    	<parameter key="jungi.theme.name_parser.class">Jungi\ThemeBundle\Core\ThemeNameParser</parameter>    	
-    	<parameter key="jungi.theme.selector.class">Jungi\ThemeBundle\Selector\StandardThemeSelector</parameter>
-    	<parameter key="jungi.theme.cache_warmer.finder.chain.class">Jungi\ThemeBundle\CacheWarmer\TemplateFinderChain</parameter>
-    	<parameter key="jungi.theme.cache_warmer.finder.class">Jungi\ThemeBundle\CacheWarmer\ThemeFinder</parameter>
-    	<parameter key="jungi.theme.locator.class">Jungi\ThemeBundle\Loader\ThemeLocator</parameter>
-    	<parameter key="jungi.theme.holder.class">Jungi\ThemeBundle\Core\SimpleThemeHolder</parameter>
-    	<parameter key="jungi.theme.mobile_detect.class">Jungi\ThemeBundle\Core\MobileDetect</parameter>
-    	<parameter key="jungi.theme.resolver.listener.class">Jungi\ThemeBundle\Resolver\ThemeResolverListener</parameter>
-    	<parameter key="jungi.theme.selector.listener.class">Jungi\ThemeBundle\Selector\ThemeSelectorListener</parameter>
-    	<parameter key="jungi.theme.validation.validator_helper.class">Jungi\ThemeBundle\Validation\ValidatorHelper</parameter>
-    	<parameter key="jungi.theme.validation.validation_requirement.class">Jungi\ThemeBundle\Validation\Requirement\ThemeResolver</parameter>
-    	<parameter key="jungi.theme.resolver.default.class">Jungi\ThemeBundle\Resolver\InMemoryThemeResolver</parameter>
-    	<parameter key="jungi.theme.changer.class">Jungi\ThemeBundle\Changer\StandardThemeChanger</parameter>
-    	<parameter key="jungi.theme.filename_parser.class">Jungi\ThemeBundle\Core\ThemeFilenameParser</parameter>
-    </parameters>
-    
-    <services>
-        <service id="jungi.theme.changer" class="%jungi.theme.changer.class%">
-            <argument type="service" id="jungi.theme.manager" />
-            <argument type="service" id="jungi.theme.holder" />
-            <argument type="service" id="jungi.theme.resolver" />
-            <argument type="service" id="event_dispatcher" />
-            <argument type="service" id="validator" />
-        </service>
-    	<service id="jungi.theme.validation.validation_requirement" class="%jungi.theme.validation.validation_requirement.class%">
-    	    <argument type="service" id="jungi.theme.resolver" />
-    	</service>
-    	<service id="jungi.theme.validation.validator_helper" class="%jungi.theme.validation.validator_helper.class%">
-    		<argument type="service" id="validator" />
-    		<argument type="service" id="jungi.theme.validation.validation_requirement" />
-    	</service>
-    	<service id="jungi.theme.selector.listener" class="%jungi.theme.selector.listener.class%">
-    		<tag name="kernel.event_subscriber" />
-    		<argument type="service" id="jungi.theme.selector" />
-    	</service>
-    	<service id="jungi.theme.selector" class="%jungi.theme.selector.class%">
-            <argument type="service" id="jungi.theme.manager" />
-            <argument type="service" id="jungi.theme.holder" />
-            <argument type="service" id="event_dispatcher" />
-            <argument type="service" id="jungi.theme.resolver" />
-            <argument>%jungi.theme.selector.ignore_null_themes%</argument>
-            <argument type="service" id="jungi.theme.validation.validator_helper" />
-        </service>
-    	<service id="jungi.theme.resolver.default" class="%jungi.theme.resolver.default.class%" />
-        <service id="jungi.theme.mobile_detect" class="%jungi.theme.mobile_detect.class%" scope="request">
-            <argument type="service" id="request" />
-        </service>
-    	<service id="jungi.theme.locator" class="%jungi.theme.locator.class%" public="false">
-    	    <argument type="service" id="jungi.theme.manager" />
-    		<argument type="service" id="file_locator" />
-            <argument>%kernel.cache_dir%</argument>
-    	</service>
-    	<service id="jungi.theme.name_parser" class="%jungi.theme.name_parser.class%" public="false">
-    		<argument type="service" id="jungi.theme.holder" />
-    		<argument type="service" id="kernel" />
-    	</service>
-    	<service id="jungi.theme.holder" class="%jungi.theme.holder.class%" />
-    	<service id="jungi.theme.mapping.loader.xml" class="%jungi.theme.mapping.loader.xml.class%">
-    	    <argument type="service" id="jungi.theme.manager" />
-    	    <argument type="service" id="file_locator" />
-    	</service>
-    	<service id="jungi.theme.mapping.loader.yml" class="%jungi.theme.mapping.loader.yml.class%">
-            <argument type="service" id="jungi.theme.manager" />
-            <argument type="service" id="file_locator" />
-        </service>
-        <service id="jungi.theme.mapping.loader.php" class="%jungi.theme.mapping.loader.php.class%">
-            <argument type="service" id="jungi.theme.manager" />
-            <argument type="service" id="file_locator" />
-        </service>
-    	<service id="jungi.theme.cache_warmer.finder.chain" class="%jungi.theme.cache_warmer.finder.chain.class%" public="false">
-    	    <argument type="collection">
-    	       <argument type="service" id="templating.finder" />
-    	       <argument type="service" id="jungi.theme.cache_warmer.finder" />
-    	    </argument>
-    	</service>
-    	<service id="jungi.theme.cache_warmer.finder" class="%jungi.theme.cache_warmer.finder.class%" public="false">
-            <argument type="service" id="jungi.theme.manager" />
-            <argument type="service" id="jungi.theme.filename_parser" />
-        </service>
-        <service id="jungi.theme.filename_parser" class="%jungi.theme.filename_parser.class%" />
-    	<service id="jungi.theme.manager" class="%jungi.theme.manager.class%" />
-
-        <!-- Aliases -->
-        <service id="jungi.theme.resolver" alias="jungi.theme.resolver.default" />
-        <service id="templating.locator" alias="jungi.theme.locator" />
-    	<service id="templating.name_parser" alias="jungi.theme.name_parser" />
-    </services>
-</container>
+<?xml version="1.0" ?><container xmlns="http://symfony.com/schema/dic/services"    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">    <parameters>    	<parameter key="jungi.theme.manager.class">Jungi\ThemeBundle\Core\ThemeManager</parameter>    	<parameter key="jungi.theme.mapping.loader.xml.class">Jungi\ThemeBundle\Mapping\Loader\XmlFileLoader</parameter>    	<parameter key="jungi.theme.mapping.loader.yml.class">Jungi\ThemeBundle\Mapping\Loader\YamlFileLoader</parameter>    	<parameter key="jungi.theme.mapping.loader.php.class">Jungi\ThemeBundle\Mapping\Loader\PhpFileLoader</parameter>    	<parameter key="jungi.theme.name_parser.class">Jungi\ThemeBundle\Core\ThemeNameParser</parameter>    	    	<parameter key="jungi.theme.selector.class">Jungi\ThemeBundle\Selector\StandardThemeSelector</parameter>    	<parameter key="jungi.theme.cache_warmer.finder.chain.class">Jungi\ThemeBundle\CacheWarmer\TemplateFinderChain</parameter>    	<parameter key="jungi.theme.cache_warmer.finder.class">Jungi\ThemeBundle\CacheWarmer\ThemeFinder</parameter>    	<parameter key="jungi.theme.locator.class">Jungi\ThemeBundle\Loader\ThemeLocator</parameter>    	<parameter key="jungi.theme.holder.class">Jungi\ThemeBundle\Core\SimpleThemeHolder</parameter>    	<parameter key="jungi.theme.mobile_detect.class">Jungi\ThemeBundle\Core\MobileDetect</parameter>    	<parameter key="jungi.theme.resolver.listener.class">Jungi\ThemeBundle\Resolver\ThemeResolverListener</parameter>    	<parameter key="jungi.theme.selector.listener.class">Jungi\ThemeBundle\Selector\ThemeSelectorListener</parameter>    	<parameter key="jungi.theme.validation.validator_helper.class">Jungi\ThemeBundle\Validation\ValidatorHelper</parameter>    	<parameter key="jungi.theme.validation.validation_requirement.class">Jungi\ThemeBundle\Validation\Requirement\ThemeResolver</parameter>    	<parameter key="jungi.theme.resolver.default.class">Jungi\ThemeBundle\Resolver\InMemoryThemeResolver</parameter>    	<parameter key="jungi.theme.changer.class">Jungi\ThemeBundle\Changer\StandardThemeChanger</parameter>    	<parameter key="jungi.theme.filename_parser.class">Jungi\ThemeBundle\Core\ThemeFilenameParser</parameter>    </parameters>        <services>        <service id="jungi.theme.changer" class="%jungi.theme.changer.class%">            <argument type="service" id="jungi.theme.manager" />            <argument type="service" id="jungi.theme.holder" />            <argument type="service" id="jungi.theme.resolver" />            <argument type="service" id="event_dispatcher" />            <argument type="service" id="validator" />        </service>    	<service id="jungi.theme.validation.validation_requirement" class="%jungi.theme.validation.validation_requirement.class%">    	    <argument type="service" id="jungi.theme.resolver" />    	</service>    	<service id="jungi.theme.validation.validator_helper" class="%jungi.theme.validation.validator_helper.class%">    		<argument type="service" id="validator" />    		<argument type="service" id="jungi.theme.validation.validation_requirement" />    	</service>    	<service id="jungi.theme.selector.listener" class="%jungi.theme.selector.listener.class%">    		<tag name="kernel.event_subscriber" />    		<argument type="service" id="jungi.theme.selector" />    	</service>    	<service id="jungi.theme.selector" class="%jungi.theme.selector.class%">            <argument type="service" id="jungi.theme.manager" />            <argument type="service" id="jungi.theme.holder" />            <argument type="service" id="event_dispatcher" />            <argument type="service" id="jungi.theme.resolver" />            <argument>%jungi.theme.selector.ignore_null_themes%</argument>            <argument type="service" id="jungi.theme.validation.validator_helper" />        </service>    	<service id="jungi.theme.resolver.default" class="%jungi.theme.resolver.default.class%" />        <service id="jungi.theme.mobile_detect" class="%jungi.theme.mobile_detect.class%" scope="request">            <argument type="service" id="request" />        </service>    	<service id="jungi.theme.locator" class="%jungi.theme.locator.class%" public="false">    	    <argument type="service" id="jungi.theme.manager" />    		<argument type="service" id="file_locator" />            <argument>%kernel.cache_dir%</argument>    	</service>    	<service id="jungi.theme.name_parser" class="%jungi.theme.name_parser.class%" public="false">    		<argument type="service" id="jungi.theme.holder" />    		<argument type="service" id="kernel" />    	</service>    	<service id="jungi.theme.holder" class="%jungi.theme.holder.class%" />    	<service id="jungi.theme.mapping.loader.xml" class="%jungi.theme.mapping.loader.xml.class%">    	    <argument type="service" id="jungi.theme.manager" />    	    <argument type="service" id="file_locator" />    	</service>    	<service id="jungi.theme.mapping.loader.yml" class="%jungi.theme.mapping.loader.yml.class%">            <argument type="service" id="jungi.theme.manager" />            <argument type="service" id="file_locator" />        </service>        <service id="jungi.theme.mapping.loader.php" class="%jungi.theme.mapping.loader.php.class%">            <argument type="service" id="jungi.theme.manager" />            <argument type="service" id="file_locator" />        </service>    	<service id="jungi.theme.cache_warmer.finder.chain" class="%jungi.theme.cache_warmer.finder.chain.class%" public="false">    	    <argument type="collection">    	       <argument type="service" id="templating.finder" />    	       <argument type="service" id="jungi.theme.cache_warmer.finder" />    	    </argument>    	</service>    	<service id="jungi.theme.cache_warmer.finder" class="%jungi.theme.cache_warmer.finder.class%" public="false">            <argument type="service" id="jungi.theme.manager" />            <argument type="service" id="jungi.theme.filename_parser" />        </service>        <service id="jungi.theme.filename_parser" class="%jungi.theme.filename_parser.class%" />    	<service id="jungi.theme.manager" class="%jungi.theme.manager.class%" />        <!-- Aliases -->        <service id="jungi.theme.resolver" alias="jungi.theme.resolver.default" />        <service id="templating.locator" alias="jungi.theme.locator" />    	<service id="templating.name_parser" alias="jungi.theme.name_parser" />    </services></container>

@@ -1,3 +1,1 @@
-JungiThemeBundle Themes
-=======================
-
+JungiThemeBundle Themes=======================
